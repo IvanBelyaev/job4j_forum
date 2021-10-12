@@ -1,0 +1,23 @@
+#header a {
+    color: black;
+}
+
+#header a:visited {
+    color: black;
+}
+
+#header a:active {
+    color: black;
+}
+
+#header a:hover {
+    text-decoration: none;
+}
+
+#header span {
+    float: right;
+}
+
+#header button {
+    float: right;
+}
