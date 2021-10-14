@@ -53,7 +53,7 @@
     </table>
     <br>
     <br>
-    <form action="addComment?id=${post.id}" method="post">
+    <form action="addComment?postId=${post.id}" method="post">
         <div class="form-group">
             <label for="text" id="textLabel">Комментировать</label>
             <textarea class="form-control" id="text" name="text"></textarea>

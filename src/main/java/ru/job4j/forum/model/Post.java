@@ -1,17 +1,49 @@
 package ru.job4j.forum.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "posts")
 public class Post {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "description", nullable = false)
     private String desc;
+
+    @Column(name = "created", nullable = false)
     private Calendar created;
-    private List<Comment> comments = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id", nullable = false)
     private User author;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "posts_comments",
+            joinColumns = { @JoinColumn(name = "post_id") },
+            inverseJoinColumns = {@JoinColumn(name = "comment_id")})
+    private List<Comment> comments = new ArrayList<>();
 
     public static Post of(String name, String desc, User author) {
         Post post = new Post();

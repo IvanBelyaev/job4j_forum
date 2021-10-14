@@ -6,6 +6,12 @@ sudo: false
 jdk:
   - openjdk14
 
+services:
+  - postgresql
+
+before_install:
+  - psql -c 'create database forum;' -U postgres
+
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 

@@ -27,7 +27,7 @@ public class PostController {
     }
 
     @PostMapping("/addComment")
-    public String addCommentToPost(@RequestParam("id") int postId, @ModelAttribute Comment comment) {
+    public String addCommentToPost(@RequestParam("postId") int postId, @ModelAttribute Comment comment) {
         postService.addCommentToPost(postId, comment);
         return "redirect:/post?id=" + postId;
     }
