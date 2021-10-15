@@ -1,9 +1,9 @@
-CREATE TABLE authorities (
+CREATE TABLE IF NOT EXISTS authorities (
     id serial PRIMARY KEY,
     authority varchar(50) NOT NULL UNIQUE
 );
 
-create table users(
+create table IF NOT EXISTS users(
     id serial PRIMARY KEY,
     username varchar(50) NOT NULL UNIQUE,
     email varchar(100) NOT NULL,
@@ -16,7 +16,7 @@ create table users(
     FOREIGN KEY (authority_id) REFERENCES authorities(id)
 );
 
-create table posts(
+create table IF NOT EXISTS posts(
     id serial PRIMARY KEY,
     name varchar(2000) not null,
     description varchar(2000) not null,
@@ -25,7 +25,7 @@ create table posts(
     FOREIGN KEY (author_id) REFERENCES users(id)
 );
 
-create table comments(
+create table IF NOT EXISTS comments(
     id serial PRIMARY KEY,
     text varchar(2000) not null,
     user_id integer not null,
@@ -33,7 +33,7 @@ create table comments(
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-create table posts_comments(
+create table IF NOT EXISTS posts_comments(
     post_id integer NOT NULL,
     comment_id integer NOT NULL,
     FOREIGN KEY (post_id) REFERENCES posts(id),

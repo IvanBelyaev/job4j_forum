@@ -18,6 +18,13 @@ install:
 script:
   - mvn test -P travis -B
 
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+env:
+  global:
+    - CODECOV_TOKEN='1516fce8-e529-4cb6-bfd2-1f9c8935d7ed'
+
 # Отправлять уведомление на почту gh0st84@mail.ru
 notifications:
   email:
