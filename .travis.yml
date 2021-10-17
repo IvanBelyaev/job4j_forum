@@ -1,34 +1,29 @@
-# используем язык java. Travis CI поддерживает другие языки тоже.
 language: java
-# используем режим обычного пользователя для сборки проекта.
 sudo: false
-
 jdk:
-  - openjdk14
-
+- openjdk14
 services:
-  - postgresql
-
+- postgresql
 before_install:
-  - psql -c 'create database forum;' -U postgres
-
-install:
-  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-
-script:
-  - mvn test -P travis -B
-
+- psql -c 'create database forum;' -U postgres
+install: true
+script: mvn clean package -DskipTests=true
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
-
+- bash <(curl -s https://codecov.io/bash)
 env:
   global:
-    - CODECOV_TOKEN='1516fce8-e529-4cb6-bfd2-1f9c8935d7ed'
-
-# Отправлять уведомление на почту gh0st84@mail.ru
+  - CODECOV_TOKEN='1516fce8-e529-4cb6-bfd2-1f9c8935d7ed'
 notifications:
   email:
     recipients:
-      - gh0st84@mail.ru
-    on_success: never # default: change
-    on_failure: always # default: always
+    - gh0st84@mail.ru
+    on_success: never
+    on_failure: always
+deploy:
+  provider: heroku
+  api_key:
+    secure: Vucrcsue8WauTZv6m+lAxiu56oHnmm1d7ECwbns21zK9scmptPvfheKlnib4oKGTe8dUeJ7n0/axpStpz+/fCMN8a73VSSA40oW9er8uQspOQ1EcOUAIP2DCqSkl436kBQ4Rfw490SnrM/VI/zW/feMbsaj94qalK7Hj0cKWlG8JqvXQ5s/Y20c9RmCVX2PjHot5oXrTxXrJv1h+ocfV/7/8dXzn+YGQXuk+0SjqVMFNLwRZt/cIZF4J7HvF52kWS85vwt4aAGbrW1fvnO0GNLYffBBkWBHHTD0I/TybIboL1rxFhoeRp/VivWtwZTN0mATI3PQnw3wnBpgFkTK9mgiCO1n6MIbYcrh7SwdILxjU4P0WmV5n3Ock5mwCKTFZnm2EJv6PmXX8DxLmi2U/CjWkLibRr7gfjMnkIwR+FbHPCg4YyQNL9auCLpZ9QwvaUg1tOVUkgqD7ppk7nDnyz5qljj6vc2N7qd7q4ApgHzWcqwE4eSxQxoJMRNm/YftxRihpMRfena06pjj4ymI7+MfVdn9Cfuru/TFDHG+Jnehdxvx1LI88XeyPbRrk9X8CFUKPKVQwtZKuIdZ61YQ+8SfK3+I0NkDBFmvKB9GLSsdoSJ0sQgo5YhYMK75N9S7Cr0rT/LAOaeHDcwfwXO0aBzUhAJ5aI8upVyKjqwEgoYo=
+  app: ancient-depths-27251
+  on:
+    branch: main
+
